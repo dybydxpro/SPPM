@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+    db:
+        image: mysql:8.0.36
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: 123456  
+            MYSQL_DATABASE: pmsx
+            MYSQL_USER: sppmdev  
+            MYSQL_PASSWORD: sppmdev123
+        ports:
+            - 3306:3306
+        volumes:
+            - mysql-data:/var/lib/mysql
+    backend:
+        build: ./Backend
+        ports:
+            - 5000:5000
+        environment:
+            DATABASE_URL: mysql://root:123456@db:3306/pmsx
+            JWT_PRIVATE_KEY: b7259f9539f651c6ff427dee0152cdfe6ff92d85ae5b7e7fb1ad8f7ae471cbc6d6e71b09cf7a7326aab4c91eae3a1921789e6f67256ab863503deac946e6c2b5
+            JWT_SECRET_KEY: 791e105574a2df1fa7bd7f496e99e52ef7edc1cb69851134cfc7c30bd8385932de2173fae5d8d09330e62aac3852dc692d7243ed8eca1bdc4a6c30ef52d5f0d4
+        depends_on:
+            - db
+            - frontend
+    frontend:
+        build: ./Frontend
+        ports:
+            - 3000:3000
+volumes:
+    mysql-data:

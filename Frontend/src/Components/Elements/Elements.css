@@ -1,0 +1,14 @@
+.radius__square {
+    border-radius: 0;
+}
+
+.pos__form--error {
+    color: #dc3545;
+    font-size: 12px;
+}
+
+.form-control.pos__form--input {
+    font-size: 14px;
+    border-color: #777;
+    border-radius: 0;
+}

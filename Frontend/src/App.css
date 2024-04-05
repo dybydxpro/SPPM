@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato',sans-serif;
+}
+
+.home, .reports, .products{
+  display: flex;
+  height: 90vh;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+
+}
+
+/*common styles*/
+/* page title & brand button */
+.page__title {
+  margin: 0;
+  font-size: 2.25rem;
+}
+
+.btn__standard {
+  border: 1px solid #050a25;
+  border-radius: 0;
+  padding: 12px 20px;
+  background: #060b26;
+  color: #fff;
+  max-width: 185px;
+  text-decoration: none;
+  font-size: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.btn__standard:hover {
+  border: 1px solid #0e1646;
+  text-decoration: none;
+  background: #0c1444;
+  color: #fff;
+}
+
+.btn__standard svg {
+  font-size: 22px;
+  margin-right: 8px;
+}
+
+.btn__standard__warning {
+  border: 1px solid #f7e303;
+  border-radius: 0;
+  padding: 8px 20px;
+  background: #f7e303;
+  color: #000;
+  max-width: 185px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.btn__standard__warning:hover {
+  border: 1px solid #f1e23c;
+  text-decoration: none;
+  background: #f1e23c;
+  color: #000;
+}
+
+.btn__standard__warning svg {
+  font-size: 22px;
+  margin-right: 8px;
+}

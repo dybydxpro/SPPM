@@ -1,0 +1,252 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model batchNo{
+  id Int @id @default(autoincrement())
+  product product @relation(fields: [productId], references: [productId])
+  productId String @db.VarChar(20)
+  batchNo String @db.VarChar(255) @unique
+  ManufacturerBNo String @db.VarChar(255)
+  mfDate DateTime 
+  exDate DateTime
+  buyingPrice Float
+  sellingPrice Float
+  status String @db.VarChar(10) @default("active")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  stocks Stock[]
+  grns GRN[]
+}
+model GRN{
+  id Int @id @default(autoincrement())
+  grnID String @db.VarChar(20) @unique
+
+  product product @relation(fields: [productId], references: [productId])
+  productId String @db.VarChar(20)
+
+  warehouse warehouse @relation(fields: [warehouseID], references: [warehouseID])
+  warehouseID String @db.VarChar(20)
+
+  supplier supplier @relation(fields: [supplierID], references: [supplierId])
+  supplierID String @db.VarChar(20)
+
+  batch batchNo @relation(fields: [batchNo], references: [batchNo])
+  batchNo String @db.VarChar(255)
+
+  quantity Int
+  totalBuyingPrice Float
+
+  status String @db.VarChar(10) @default("active")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Stock{
+  id Int @id @default(autoincrement())
+  product product @relation(fields: [productId], references: [productId])
+  productId String @db.VarChar(20)
+  warehouse warehouse @relation(fields: [warehouseID], references: [warehouseID])
+  warehouseID String @db.VarChar(20)
+  batch batchNo @relation(fields: [batchNo], references: [batchNo])
+  batchNo String @db.VarChar(255)@unique
+  quantity Int
+  buyingPrice Float
+  sellingPrice Float
+  status String @db.VarChar(10) @default("active")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model product{
+  id Int @id @default(autoincrement())
+  productId String @db.VarChar(20) @unique
+  barcode String @db.VarChar(50) @unique
+  productName String @db.VarChar(150)
+  createdAt DateTime @default(now())
+  status String @db.VarChar(10) @default("active")
+  updatedAt DateTime @updatedAt
+  batches batchNo[]
+  grns GRN[]
+  stocks Stock[]
+  //@@unique([productId, productName])
+  requestnote requestnote[]
+}
+
+model warehouse{
+  id Int @id @default(autoincrement())
+  warehouseID String @db.VarChar(20) @unique
+  location String @db.VarChar(50)
+  createdAt DateTime @default(now())
+  status String @db.VarChar(10) @default("active")
+  updatedAt DateTime @updatedAt
+  grns GRN[]
+  stocks Stock[]
+  
+}
+
+model customer {
+  id Int @id @default(autoincrement())
+  customer_id String @db.VarChar(20) @unique
+  name String @db.VarChar(50)
+  email String @db.VarChar(120) @unique
+  mobile String @db.VarChar(14) @unique
+  loyalty_points Int @db.Int @default(0)
+  status String @db.VarChar(10) @default("active")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([customer_id, name, mobile, email])
+  reviews service_reviews[]
+  
+}
+
+model service_reviews{
+  id Int @id @default(autoincrement())
+  customer customer @relation( fields: [customer_id, name, mobile, email] , references: [customer_id , name, mobile, email])
+  customer_id String @db.VarChar(20) @unique
+  name String @db.VarChar(50)
+  email String @db.VarChar(120) @unique
+  mobile String @db.VarChar(14) @unique
+  review Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt 
+}
+
+model supplier{
+  id Int @id @default(autoincrement())
+  supplierId String @db.VarChar(20) @unique
+  supplierName String @db.VarChar(150) 
+  supplierAddress String @db.VarChar(150)
+  supplierContactNumber String @db.VarChar(20)
+  outstandingAmount Float @db.Float @default(0)
+  supplierEmail String @db.VarChar(255) @unique
+  status String @db.VarChar(10) @default("active")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([supplierId, supplierName , supplierEmail])
+  payments supplier_payments[]
+  grns GRN[]
+  requestnote requestnote[]
+}
+
+model bank{
+  id Int @id @default(autoincrement())
+  accountNumber String @db.VarChar(30) @unique
+  accountName String @db.VarChar(50) 
+  bankName String @db.VarChar(50) 
+  branchName String @db.VarChar(50) 
+  payments supplier_payments[]
+}
+
+model supplier_payments {
+  id Int @id @default(autoincrement())
+  paymentId String @db.VarChar(10) @unique 
+  supplier supplier @relation( fields: [supplierId , supplierName , supplierEmail] , references: [supplierId , supplierName , supplierEmail])
+  supplierId String @db.VarChar(20)
+  supplierName String @db.VarChar(30)
+  supplierEmail String @db.VarChar(255)
+  paymentDescription String @db.VarChar(200) 
+  paymentAmount Float
+  bank bank @relation( fields: [accountNumber] , references: [accountNumber])
+  accountNumber String @db.VarChar(30)
+  createdAt DateTime @default(now())
+}
+
+ model user{
+  id Int @id @default(autoincrement())
+  user_id String @db.VarChar(20) @unique
+  name String @db.VarChar(20)
+  mobileNo Int @unique
+  email String @db.VarChar(255) @unique
+  address String @db.VarChar(255)
+  userLevel Int 
+  password String @db.VarChar(300)
+  DOB DateTime
+  status String @db.VarChar(10) @default("active")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([user_id, email])
+  userlog userlog[]
+  userreview userreview[]
+  leavenote leavenote[]
+} 
+
+model userlog{
+  id Int @id @default(autoincrement())
+  user user @relation ( fields: [user_id , email] , references: [user_id , email])
+  user_id String @db.VarChar(20)
+  name String @db.VarChar(20)
+  userLevel Int 
+  email String @db.VarChar(255) 
+  logTime DateTime @default(now())
+}
+
+model userreview{
+  id Int @id @default(autoincrement())
+  user user @relation ( fields: [user_id , email] , references: [user_id , email])
+  user_id String @db.VarChar(20)
+  name String @db.VarChar(20)
+  email String @db.VarChar(255) 
+  rating Int
+  description String @db.VarChar(1000) 
+  createdAt DateTime @default(now())
+}
+
+model leavenote{
+  id Int @id @default(autoincrement())
+  user user @relation ( fields: [user_id , email] , references: [user_id , email])
+  user_id String @db.VarChar(20)
+  name String @db.VarChar(20)
+  email String @db.VarChar(255)
+  date String @db.VarChar(30)
+  reason String @db.VarChar(255)
+  createdAt DateTime @default(now())
+}
+
+model requestnote{
+  id Int @id @default(autoincrement())
+  requestId String @db.VarChar(20) @unique
+  supplier supplier @relation( fields: [supplierId , supplierName , supplierEmail] , references: [supplierId , supplierName , supplierEmail])
+  supplierId String @db.VarChar(20)
+  supplierName String @db.VarChar(30)
+  supplierEmail String @db.VarChar(255)
+  product product @relation ( fields : [productId] , references: [productId])
+  productId String @db.VarChar(20) 
+  productName String @db.VarChar(150)
+  quantity Int
+  date String @db.VarChar(30)
+  createdAt DateTime @default(now())
+}
+
+model sale{
+  Id Int @id @default(autoincrement())
+  saleId String @db.VarChar(30) @unique
+  customer_id String @db.VarChar(20) 
+  discount Float
+  gross Float
+  net Float
+  saleDate DateTime @default(now())
+  salelines salelines[]
+}
+
+model salelines{
+  Id Int @id @default(autoincrement())
+  sale sale @relation(fields:[saleId] , references: [saleId])
+  saleId String @db.VarChar(30) 
+  productId String @db.VarChar(20)
+  productName String @db.VarChar(150)
+  batchNo String @db.VarChar(255) 
+  quantity Int
+  sellingPrice Float
+  total Float
+  createdAt DateTime @default(now())
+}
+

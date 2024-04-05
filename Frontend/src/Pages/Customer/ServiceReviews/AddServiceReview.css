@@ -1,0 +1,58 @@
+.star-review-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .star-container {
+    margin-right: 10px; 
+  }
+  
+  .review-radio {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+  
+  .star-icon {
+    font-size: 50px;
+    cursor: pointer;
+  }
+
+  .review-header {
+    margin-bottom: 20px; 
+    text-align: center;
+  }
+  
+  .customer-info {
+    font-size: 40px;
+  }
+
+  body { 
+    background: url(background.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+  .add{
+    background-color:#00ffff;
+    padding: 8px;
+    margin-top:20px;
+    margin-right: 15px;
+    border-radius: 6px;
+    color: white;
+    border-style: none;
+}
+
+.add:hover{
+    background-color:#5aff62;
+}
+
+
+
+  
+  

@@ -1,0 +1,73 @@
+.Auth-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  .Auth-form {
+    width: 420px;
+    box-shadow: #00000029 1px 1px 10px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    border-radius: 8px;
+    background-color: white;
+  }
+  
+  .Auth-form-content {
+    padding-left: 12%;
+    padding-right: 12%;
+  }
+  
+  .Auth-form-title {
+    text-align: center;
+    margin-bottom: 1em;
+    font-size: 24px;
+    color: rgb(34, 34, 34);
+    font-weight: 800;
+  }
+  
+  .Auth-form-title1{
+    text-align: center;
+    margin-bottom:10px;
+    font-size: 24px;
+    color:white;
+    padding:5px;
+    background-color: darkblue;
+    font-weight: 800;
+    border-radius: 10px;
+  }
+  label {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(34, 34, 34);
+  }
+
+.background{
+  /* background: url(../../Assests/logo.png); */
+  /* background:#C8BCB9; */
+  border-radius: 10px;
+  width: 400;
+  height:380px;
+  padding-top:20px;
+}
+
+.img{
+  width:70%;
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}
+.head{
+  font-size: large;
+  text-align: center;
+  font-weight: bolder;
+}
+p{
+  text-align: center;
+}
+.dev{
+  text-align: center;
+  font-weight: bolder;
+}
